@@ -1,189 +1,200 @@
 //Question 2 (a)
 #include <iostream>
+using namespace std;
+
 struct Node {
-    int data;
-    Node* left;
-    Node* right;
+    int val;
+    Node* leftChild;
+    Node* rightChild;
 };
 
-Node* add_node(Node* parent, int data) {
-    if (parent == NULL) {
-        Node* NewNode = new Node;
-        NewNode->data = data;
-        NewNode->left = NULL;
-        NewNode->right = NULL;
-        return NewNode;
+Node* insertNode(Node* root, int val) {
+    if (root == NULL) {
+        Node* temp = new Node;
+        temp->val = val;
+        temp->leftChild = NULL;
+        temp->rightChild = NULL;
+        return temp;
     }
-    if (data < parent->data) parent->left = add_node(parent->left, data);
-    else if (data > parent->data) parent->right = add_node(parent->right, data);
-    return parent;
+    if (val < root->val) root->leftChild = insertNode(root->leftChild, val);
+    else if (val > root->val) root->rightChild = insertNode(root->rightChild, val);
+    return root;
 }
 
-Node* search_recursive(Node* parent, int key) {
-    if (parent == NULL || parent->data == key) return parent;
-    if (key < parent->data) return search_recursive(parent->left, key);
-    return search_recursive(parent->right, key);
+Node* recursiveSearch(Node* root, int key) {
+    if (root == NULL || root->val == key) return root;
+    if (key < root->val) return recursiveSearch(root->leftChild, key);
+    return recursiveSearch(root->rightChild, key);
 }
 
-Node* search_nonrecursive(Node* parent, int key) {
-    Node* temp = parent;
-    while (temp != NULL) {
-        if (temp->data == key) return temp;
-        if (key < temp->data) temp = temp->left;
-        else temp = temp->right;
+Node* iterativeSearch(Node* root, int key) {
+    Node* p = root;
+    while (p != NULL) {
+        if (p->val == key) return p;
+        if (key < p->val) p = p->leftChild;
+        else p = p->rightChild;
     }
     return NULL;
 }
 
 int main() {
     Node* root = NULL;
-    root = add_node(root, 5);
-    root = add_node(root, 6);
-    root = add_node(root, 3);
-    root = add_node(root, 4);
-    root = add_node(root, 2);
+    root = insertNode(root, 15);
+    root = insertNode(root, 9);
+    root = insertNode(root, 20);
+    root = insertNode(root, 7);
+    root = insertNode(root, 11);
 
-    int key = 4;
-    Node* r1 = search_recursive(root, key);
-    Node* r2 = search_nonrecursive(root, key);
+    int key = 11;
+    Node* s1 = recursiveSearch(root, key);
+    Node* s2 = iterativeSearch(root, key);
 
-    std::cout << "Recursive Search: ";
-    if (r1) std::cout << "Found " << r1->data << "\n"; 
-    else std::cout << "Not Found\n";
+    cout << "Recursive Search: ";
+    if (s1) cout << "Found " << s1->val << "\n";
+    else cout << "Not Found\n";
 
-    std::cout << "Non-Recursive Search: ";
-    if (r2) std::cout << "Found " << r2->data << "\n"; 
-    else std::cout << "Not Found\n";
+    cout << "Non-Recursive Search: ";
+    if (s2) cout << "Found " << s2->val << "\n";
+    else cout << "Not Found\n";
 
     return 0;
 }
+
 
 //Question 2 (b)
 #include <iostream>
+using namespace std;
+
 struct Node {
-    int data;
-    Node* left;
-    Node* right;
+    int val;
+    Node* leftChild;
+    Node* rightChild;
 };
 
-Node* add_node(Node* parent, int data) {
-    if (parent == NULL) {
-        Node* NewNode = new Node;
-        NewNode->data = data;
-        NewNode->left = NULL;
-        NewNode->right = NULL;
-        return NewNode;
+Node* insertNode(Node* root, int val) {
+    if (root == NULL) {
+        Node* temp = new Node;
+        temp->val = val;
+        temp->leftChild = NULL;
+        temp->rightChild = NULL;
+        return temp;
     }
-    if (data < parent->data) parent->left = add_node(parent->left, data);
-    else if (data > parent->data) parent->right = add_node(parent->right, data);
-    return parent;
+    if (val < root->val) root->leftChild = insertNode(root->leftChild, val);
+    else if (val > root->val) root->rightChild = insertNode(root->rightChild, val);
+    return root;
 }
 
-Node* find_max(Node* parent) {
-    if (parent == NULL || parent->right == NULL) return parent;
-    return find_max(parent->right);
+Node* getMax(Node* root) {
+    if (root == NULL || root->rightChild == NULL) return root;
+    return getMax(root->rightChild);
 }
 
 int main() {
     Node* root = NULL;
-    root = add_node(root, 5);
-    root = add_node(root, 6);
-    root = add_node(root, 3);
-    root = add_node(root, 7);
-    root = add_node(root, 4);
+    root = insertNode(root, 18);
+    root = insertNode(root, 5);
+    root = insertNode(root, 25);
+    root = insertNode(root, 30);
+    root = insertNode(root, 12);
 
-    Node* maxNode = find_max(root);
+    Node* mx = getMax(root);
 
-    std::cout << "Maximum Element: ";
-    if (maxNode) std::cout << maxNode->data << "\n"; 
-    else std::cout << "Tree Empty\n";
+    cout << "Maximum Element: ";
+    if (mx) cout << mx->val << "\n";
+    else cout << "Tree Empty\n";
 
     return 0;
 }
 
+
 //Question 2 (c)
 #include <iostream>
+using namespace std;
+
 struct Node {
-    int data;
-    Node* left;
-    Node* right;
+    int val;
+    Node* leftChild;
+    Node* rightChild;
 };
 
-Node* add_node(Node* parent, int data) {
-    if (parent == NULL) {
-        Node* NewNode = new Node;
-        NewNode->data = data;
-        NewNode->left = NULL;
-        NewNode->right = NULL;
-        return NewNode;
+Node* insertNode(Node* root, int val) {
+    if (root == NULL) {
+        Node* temp = new Node;
+        temp->val = val;
+        temp->leftChild = NULL;
+        temp->rightChild = NULL;
+        return temp;
     }
-    if (data < parent->data) parent->left = add_node(parent->left, data);
-    else if (data > parent->data) parent->right = add_node(parent->right, data);
-    return parent;
+    if (val < root->val) root->leftChild = insertNode(root->leftChild, val);
+    else if (val > root->val) root->rightChild = insertNode(root->rightChild, val);
+    return root;
 }
 
-Node* find_min(Node* parent) {
-    if (parent == NULL || parent->left == NULL) return parent;
-    return find_min(parent->left);
+Node* getMin(Node* root) {
+    if (root == NULL || root->leftChild == NULL) return root;
+    return getMin(root->leftChild);
 }
 
 int main() {
     Node* root = NULL;
-    root = add_node(root, 5);
-    root = add_node(root, 6);
-    root = add_node(root, 3);
-    root = add_node(root, 7);
-    root = add_node(root, 2);
+    root = insertNode(root, 40);
+    root = insertNode(root, 25);
+    root = insertNode(root, 50);
+    root = insertNode(root, 10);
+    root = insertNode(root, 35);
 
-    Node* minNode = find_min(root);
+    Node* mn = getMin(root);
 
-    std::cout << "Minimum Element: ";
-    if (minNode) std::cout << minNode->data << "\n"; 
-    else std::cout << "Tree Empty\n";
+    cout << "Minimum Element: ";
+    if (mn) cout << mn->val << "\n";
+    else cout << "Tree Empty\n";
 
     return 0;
 }
 
 //Question 2 (d)
 #include <iostream>
+using namespace std;
+
 struct Node {
-    int data;
-    Node* left;
-    Node* right;
+    int val;
+    Node* leftChild;
+    Node* rightChild;
 };
 
-Node* add_node(Node* parent, int data) {
-    if (parent == NULL) {
-        Node* NewNode = new Node;
-        NewNode->data = data;
-        NewNode->left = NULL;
-        NewNode->right = NULL;
-        return NewNode;
+Node* insertNode(Node* root, int val) {
+    if (root == NULL) {
+        Node* temp = new Node;
+        temp->val = val;
+        temp->leftChild = NULL;
+        temp->rightChild = NULL;
+        return temp;
     }
-    if (data < parent->data) parent->left = add_node(parent->left, data);
-    else if (data > parent->data) parent->right = add_node(parent->right, data);
-    return parent;
+    if (val < root->val) root->leftChild = insertNode(root->leftChild, val);
+    else if (val > root->val) root->rightChild = insertNode(root->rightChild, val);
+    return root;
 }
 
-Node* find_min(Node* parent) {
-    if (parent == NULL || parent->left == NULL) return parent;
-    return find_min(parent->left);
+Node* getMin(Node* root) {
+    if (root == NULL || root->leftChild == NULL) return root;
+    return getMin(root->leftChild);
 }
 
-Node* successor(Node* parent, int data) {
+Node* getSuccessor(Node* root, int key) {
     Node* succ = NULL;
-    Node* current = parent;
-    while (current != NULL) {
-        if (data < current->data) {
-            succ = current;
-            current = current->left;
-        } 
-        else if (data > current->data) {
-            current = current->right;
-        } 
+    Node* curr = root;
+
+    while (curr != NULL) {
+        if (key < curr->val) {
+            succ = curr;
+            curr = curr->leftChild;
+        }
+        else if (key > curr->val) {
+            curr = curr->rightChild;
+        }
         else {
-            if (current->right != NULL)
-                succ = find_min(current->right);
+            if (curr->rightChild != NULL)
+                succ = getMin(curr->rightChild);
             break;
         }
     }
@@ -192,64 +203,67 @@ Node* successor(Node* parent, int data) {
 
 int main() {
     Node* root = NULL;
-    root = add_node(root, 20);
-    root = add_node(root, 8);
-    root = add_node(root, 22);
-    root = add_node(root, 4);
-    root = add_node(root, 12);
-    root = add_node(root, 10);
-    root = add_node(root, 14);
+    root = insertNode(root, 50);
+    root = insertNode(root, 30);
+    root = insertNode(root, 70);
+    root = insertNode(root, 20);
+    root = insertNode(root, 40);
+    root = insertNode(root, 60);
+    root = insertNode(root, 80);
 
-    int key = 10;
-    Node* succ = successor(root, key);
+    int key = 40;
+    Node* succ = getSuccessor(root, key);
 
-    std::cout << "In-order Successor of " << key << ": ";
-    if (succ) std::cout << succ->data << "\n";
-    else std::cout << "No Successor\n";
+    cout << "In-order Successor of " << key << ": ";
+    if (succ) cout << succ->val << "\n";
+    else cout << "No Successor\n";
 
     return 0;
 }
 
 //Question 2 (e)
 #include <iostream>
+using namespace std;
+
 struct Node {
-    int data;
-    Node* left;
-    Node* right;
+    int val;
+    Node* leftChild;
+    Node* rightChild;
 };
 
-Node* add_node(Node* parent, int data) {
-    if (parent == NULL) {
-        Node* NewNode = new Node;
-        NewNode->data = data;
-        NewNode->left = NULL;
-        NewNode->right = NULL;
-        return NewNode;
+Node* insertNode(Node* root, int val) {
+    if (root == NULL) {
+        Node* temp = new Node;
+        temp->val = val;
+        temp->leftChild = NULL;
+        temp->rightChild = NULL;
+        return temp;
     }
-    if (data < parent->data) parent->left = add_node(parent->left, data);
-    else if (data > parent->data) parent->right = add_node(parent->right, data);
-    return parent;
+    if (val < root->val) root->leftChild = insertNode(root->leftChild, val);
+    else if (val > root->val) root->rightChild = insertNode(root->rightChild, val);
+    return root;
 }
 
-Node* find_max(Node* parent) {
-    if (parent == NULL || parent->right == NULL) return parent;
-    return find_max(parent->right);
+Node* getMax(Node* root) {
+    if (root == NULL || root->rightChild == NULL) return root;
+    return getMax(root->rightChild);
 }
 
-Node* predecessor(Node* parent, int data) {
+Node* getPredecessor(Node* root, int key) {
     Node* pred = NULL;
-    Node* current = parent;
-    while (current != NULL) {
-        if (data > current->data) {
-            pred = current;
-            current = current->right;
-        } 
-        else if (data < current->data) {
-            current = current->left;
-        } 
+    Node* curr = root;
+
+    while (curr != NULL) {
+        if (key > curr->val) {
+            pred = curr;
+            curr = curr->rightChild;
+        }
+        else if (key < curr->val) {
+            curr = curr->leftChild;
+        }
         else {
-            if (current->left != NULL)
-                pred = find_max(current->left);
+            if (curr->leftChild != NULL)
+                pred = getMax(curr->leftChild);
             break;
         }
     }
@@ -258,20 +272,20 @@ Node* predecessor(Node* parent, int data) {
 
 int main() {
     Node* root = NULL;
-    root = add_node(root, 20);
-    root = add_node(root, 8);
-    root = add_node(root, 22);
-    root = add_node(root, 4);
-    root = add_node(root, 12);
-    root = add_node(root, 10);
-    root = add_node(root, 14);
+    root = insertNode(root, 50);
+    root = insertNode(root, 30);
+    root = insertNode(root, 70);
+    root = insertNode(root, 20);
+    root = insertNode(root, 40);
+    root = insertNode(root, 60);
+    root = insertNode(root, 80);
 
-    int key = 14;
-    Node* pred = predecessor(root, key);
+    int key = 60;
+    Node* pred = getPredecessor(root, key);
 
-    std::cout << "In-order Predecessor of " << key << ": ";
-    if (pred) std::cout << pred->data << "\n";
-    else std::cout << "No Predecessor\n";
+    cout << "In-order Predecessor of " << key << ": ";
+    if (pred) cout << pred->val << "\n";
+    else cout << "No Predecessor\n";
 
     return 0;
 }
